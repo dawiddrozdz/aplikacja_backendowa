@@ -2,12 +2,11 @@
 
 namespace AppCore.Models;
 
-public class Address
+public class Address : EntityBase
 {
-    public required int Id { get; set; }
     public required string Street { get; set; }
     public required string City { get; set; }
-    public required string ZipCode { get; set; }
-    public required Country Country {get; set; }
-
+    public required string PostalCode { get; set; }
+    public required Country Country { get; set; }
+    public required AddressType AddressType { get; set; }
 }

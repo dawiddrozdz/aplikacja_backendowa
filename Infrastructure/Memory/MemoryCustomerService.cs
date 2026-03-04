@@ -10,22 +10,20 @@ public class MemoryCustomerService: ICustomerService
         return [
             new Customer()
             {
-                Id = 1,
+                Id = Guid.NewGuid(),
                 FirstName = "Jan",
                 LastName = "Kowalski",
                 Email = "a@wsei.edu.pl",
                 Phone = "111-111-111",
-                AddressId = 11
 
             },
-            new Customer() 
+            new Customer()
                 {
-                    Id = 1,
+                    Id = Guid.NewGuid(),
                     FirstName = "Kuba",
                     LastName = "Kowalska",
                     Email = "b@wsei.edu.pl",
                     Phone = "111-222-111",
-                    AddressId = 22
                 }
         ];
     }

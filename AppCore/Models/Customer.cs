@@ -1,9 +1,9 @@
-﻿namespace AppCore.Models;
+﻿using System;
 
-public class Customer
+namespace AppCore.Models;
+
+public class Customer : EntityBase
 {
-    public required int Id { get; set; }
-    
     public required string FirstName { get; set; }
     
     public required string LastName { get; set; }
@@ -12,8 +12,6 @@ public class Customer
     
     public required string Phone { get; set; }
     
-    public int AddressId {get; set;}
-    
-    
-    
+    // Address może być opcjonalny, więc Guid? jest odpowiednim typem
+    public Guid? AddressId { get; set; }
 }
