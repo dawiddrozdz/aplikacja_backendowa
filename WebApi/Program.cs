@@ -9,16 +9,22 @@ public class Program
     {
         var builder = WebApplication.CreateBuilder(args);
 
-        // Add services to the container.
+        builder.Services.AddControllers();
         builder.Services.AddAuthorization();
         builder.Services.AddSingleton<ICustomerService, MemoryCustomerService>();
+        
+        builder.Services.AddSingleton<IPersonRepository, MemoryPersonRepository>();
+        builder.Services.AddSingleton<ICompanyRepository, MemoryCompanyRepository>();
+        builder.Services.AddSingleton<IOrganizationRepository, MemoryOrganizationRepository>();
+        
+        builder.Services.AddSingleton<IContactUnitOfWork, MemoryContactUnitOfWork>();
+        
+        builder.Services.AddSingleton<IPersonService, MemoryPersonService>();
 
-        // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
         builder.Services.AddOpenApi();
 
         var app = builder.Build();
 
-        // Configure the HTTP request pipeline.
         if (app.Environment.IsDevelopment())
         {
             app.MapOpenApi();
@@ -27,9 +33,10 @@ public class Program
         app.UseHttpsRedirection();
 
         app.UseAuthorization();
+        app.MapControllers();
         
 
-        app.MapGet("/api/customers", (ICustomerService services, HttpContext httpContext) =>
+        app.MapGet("/api/customers", (ICustomerService services) =>
             {
                 return services.GetCustomers();
                

@@ -30,7 +30,7 @@ public class MemoryGenericRepositoryTest
                 Street = "Test Street",
                 City = "Test City",
                 PostalCode = "00-000",
-                Country = AppCore.ValueObjects.Country.Pl,
+                Country = AppCore.ValueObjects.Country.Pl.ToString(),
                 AddressType = AppCore.ValueObjects.AddressType.Main
             },
             ContactStatus = AppCore.ValueObjects.ContactStatus.Active,
