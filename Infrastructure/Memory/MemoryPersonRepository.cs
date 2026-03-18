@@ -8,7 +8,7 @@ public class MemoryPersonRepository : MemoryGenericRepository<Person>, IPersonRe
 {
     public MemoryPersonRepository() : base()
     {
-        var id1 = Guid.NewGuid();
+        var id1 = Guid.Parse("732B7F3A-CCEA-43B0-8E47-EEC4A0F0041A");
         _data.Add(id1, new Person()
         {
             Id = id1,
@@ -63,6 +63,11 @@ public class MemoryPersonRepository : MemoryGenericRepository<Person>, IPersonRe
     }
 
     public Task<IEnumerable<Person>> GetByOrganizationAsync(Guid organizationId)
+    {
+        throw new NotImplementedException();
+    }
+
+    public Task DeleteAsync(Guid id)
     {
         throw new NotImplementedException();
     }

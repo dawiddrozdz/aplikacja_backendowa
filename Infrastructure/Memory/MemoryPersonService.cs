@@ -38,24 +38,70 @@ public class MemoryPersonService : IPersonService
         }
     }
 
-    public Task<PersonDto?> FindByIdAsync(Guid id)
+    public async Task<PersonDto?> FindByIdAsync(Guid id)
     {
-        throw new NotImplementedException();
+        var person = await _unitOfWork.Persons.FindByIdAsync(id);
+        return person != null ? PersonDto.FromEntity(person) : null;
     }
 
-    public Task<PersonDto> CreateAsync(CreatePersonDto dto)
+    public async Task<PersonDto> CreateAsync(CreatePersonDto dto)
     {
-        throw new NotImplementedException();
+        var entity = dto.ToEntity(Guid.NewGuid());
+        entity = await _unitOfWork.Persons.AddAsync(entity);
+        await _unitOfWork.SaveChangesAsync();
+        return PersonDto.FromEntity(entity);
     }
 
-    public Task UpdateAsync(Guid id, UpdatePersonDto dto)
+    public async Task UpdateAsync(Guid id, UpdatePersonDto dto)
     {
-        throw new NotImplementedException();
+        var person = await _unitOfWork.Persons.FindByIdAsync(id);
+        if (person == null)
+            throw new KeyNotFoundException($"Osoba o ID {id} nie istnieje.");
+
+        // Mapowanie zmian z dto do entity
+        if (dto.FirstName is not null)
+            person.FirstName = dto.FirstName;
+        if (dto.LastName is not null)
+            person.LastName = dto.LastName;
+        if (dto.Email is not null)
+            person.Email = dto.Email;
+        if (dto.Phone is not null)
+            person.Phone = dto.Phone;
+        if (dto.BirthDate.HasValue)
+            person.BirthDate = dto.BirthDate.Value;
+        if (dto.Gender.HasValue)
+            person.Gender = dto.Gender.Value;
+        if (dto.Position is not null)
+            person.Position = dto.Position;
+        if (dto.EmployerId.HasValue)
+            person.Employer = dto.EmployerId.ToString();
+        if (dto.Status.HasValue)
+            person.ContactStatus = dto.Status.Value;
+        if (dto.Address is not null)
+        {
+            person.Address = new AppCore.Models.Address
+            {
+                Id = person.Address?.Id ?? Guid.NewGuid(),
+                Street = dto.Address.Street,
+                City = dto.Address.City,
+                PostalCode = dto.Address.PostalCode,
+                Country = dto.Address.Country,
+                AddressType = dto.Address.Type
+            };
+        }
+
+        await _unitOfWork.Persons.UpdateAsync(person);
+        await _unitOfWork.SaveChangesAsync();
     }
 
-    public Task RemoveAsync(Guid id)
+    public async Task RemoveAsync(Guid id)
     {
-        throw new NotImplementedException();
+        var person = await _unitOfWork.Persons.FindByIdAsync(id);
+        if (person == null)
+            throw new KeyNotFoundException($"Osoba o ID {id} nie istnieje.");
+
+        await _unitOfWork.Persons.DeleteAsync(id);
+        await _unitOfWork.SaveChangesAsync();
     }
 
     public Task AddNoteAsync(Guid personId, string noteText)

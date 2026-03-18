@@ -17,5 +17,7 @@ public class Organization : EntityBase
     public List<Person> CategoryMembers { get; set; } = [];
     
     public Person? PrimaryContact { get; set; }
+    public DateTime DateTimeCreatedAt { get; set; }
+    public ContactStatus ContactStatus { get; set; }
 }
 

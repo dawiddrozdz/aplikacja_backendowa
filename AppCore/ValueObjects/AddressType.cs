@@ -7,6 +7,7 @@ public enum AddressType
     Delivery,
     Billing,
     Home,
-    Work
+    Work,
+    Office
 }
 

@@ -6,18 +6,27 @@ namespace WebApi.Controller;
 
 [ApiController]
 [Route("/api/contacts")]
-public class ContactsController : ControllerBase
+public class ContactsController(IPersonService service) : ControllerBase
 {
-    private readonly IPersonService _service;
-
-    public ContactsController(IPersonService service)
-    {
-        _service = service;
-    }
-
     [HttpGet]
     public async Task<IActionResult> GetAllPersons(int page, int size)
     {
-        return Ok(await _service.FindAllPeoplePagedAsync(page, size));
+        return Ok(await service.FindAllPeoplePagedAsync(page, size));
+    }
+
+    [HttpGet("{id:guid}")]
+    public async Task<IActionResult> GetPerson(Guid id)
+    {
+        var dto = await service.FindByIdAsync(id);
+        if (dto == null)
+            return NotFound();
+        return Ok(dto);
+    }
+
+    [HttpPost]
+    public async Task<IActionResult> Create([FromBody] CreatePersonDto dto)
+    {
+        var result = await service.CreateAsync(dto);
+        return CreatedAtAction(nameof(GetPerson), new { id = result.Id }, result);
     }
 }

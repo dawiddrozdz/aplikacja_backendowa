@@ -9,4 +9,5 @@ public interface IPersonRepository : IGenericRepositoryAsync<Person>
 {
     Task<IEnumerable<Person>> GetByCompanyAsync(Guid companyId);
     Task<IEnumerable<Person>> GetByOrganizationAsync(Guid organizationId);
+    Task DeleteAsync(Guid id);
 }
