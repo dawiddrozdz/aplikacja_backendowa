@@ -53,7 +53,7 @@ POST {{WebApi_HostAddress}}/api/contacts/732b7f3a-ccea-43b0-8e47-eec4a0f0041a/no
 Content-Type: application/json
 
 {
-  "content": "Wojtek to super persona"
+  "content": "Wojtek to super persona2"
 }
 
 ###
@@ -64,8 +64,8 @@ Content-Type: application/json
 
 ###
 
-### 6.1 POBRANIE POJEDYNCZEJ NOTATKI (zastąp {noteId} prawdziwym ID z odpowiedzi POST)
-GET {{WebApi_HostAddress}}/api/contacts/732b7f3a-ccea-43b0-8e47-eec4a0f0041a/notes/00000000-0000-0000-0000-000000000001
+### 6.1 POBRANIE POJEDYNCZEJ NOTATKI 
+GET {{WebApi_HostAddress}}/api/contacts/732b7f3a-ccea-43b0-8e47-eec4a0f0041a/notes/d37666fc-49cc-4d18-9120-f8878473b51a
 Content-Type: application/json
 
 ###
@@ -80,8 +80,8 @@ Content-Type: application/json
 
 ###
 
-### 8. USUNIĘCIE NOTATKI (zastąp {noteId} prawdziwym ID z odpowiedzi POST)
-DELETE {{WebApi_HostAddress}}/api/contacts/732b7f3a-ccea-43b0-8e47-eec4a0f0041a/notes/00000000-0000-0000-0000-000000000001
+### 8. USUNIĘCIE NOTATKI 
+DELETE {{WebApi_HostAddress}}/api/contacts/732b7f3a-ccea-43b0-8e47-eec4a0f0041a/notes/5ba8b7b0-c33d-448d-a216-2d48c1766f49
 Content-Type: application/json
 
 ###
