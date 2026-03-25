@@ -1,6 +1,7 @@
 using AppCore.Dto;
 using AppCore.Interfaces;
 using AppCore.Models;
+using AppCore.Exceptions;
 
 namespace Infrastructure.Memory;
 
@@ -56,9 +57,8 @@ public class MemoryPersonService : IPersonService
     {
         var person = await _unitOfWork.Persons.FindByIdAsync(id);
         if (person == null)
-            throw new KeyNotFoundException($"Osoba o ID {id} nie istnieje.");
-
-        // Mapowanie zmian z dto do entity
+            throw new ContactNotFoundException($"Osoba o ID {id} nie istnieje.");
+        
         if (dto.FirstName is not null)
             person.FirstName = dto.FirstName;
         if (dto.LastName is not null)
@@ -98,7 +98,7 @@ public class MemoryPersonService : IPersonService
     {
         var person = await _unitOfWork.Persons.FindByIdAsync(id);
         if (person == null)
-            throw new KeyNotFoundException($"Osoba o ID {id} nie istnieje.");
+            throw new ContactNotFoundException($"Osoba o ID {id} nie istnieje.");
 
         await _unitOfWork.Persons.DeleteAsync(id);
         await _unitOfWork.SaveChangesAsync();
@@ -112,5 +112,52 @@ public class MemoryPersonService : IPersonService
     public Task AddTagAsync(Guid personId, string tag)
     {
         throw new NotImplementedException();
+    }
+
+    public async Task<AppCore.Models.Note> AddNoteToPerson(Guid personId, CreateNoteDto noteDto)
+    {
+        var person = await _unitOfWork.Persons.FindByIdAsync(personId);
+        if (person == null)
+            throw new ContactNotFoundException($"Person with id={personId} not found!");
+
+        if (person.Notes == null)
+            person.Notes = new List<AppCore.Models.Note>();
+
+        var note = new AppCore.Models.Note
+        {
+            Id = Guid.NewGuid(),
+            Content = noteDto.Content,
+            DateTimeCreatedAt = DateTime.UtcNow
+        };
+
+        person.Notes.Add(note);
+        await _unitOfWork.Persons.UpdateAsync(person);
+        await _unitOfWork.SaveChangesAsync();
+
+        return note;
+    }
+
+    public async Task<PersonDto> GetPerson(Guid personId)
+    {
+        var person = await _unitOfWork.Persons.FindByIdAsync(personId);
+        if (person == null)
+            throw new ContactNotFoundException($"Osoba o ID {personId} nie zostala stworzona.");
+
+        return PersonDto.FromEntity(person);
+    }
+
+    public async Task RemoveNoteFromPerson(Guid personId, Guid noteId)
+    {
+        var person = await _unitOfWork.Persons.FindByIdAsync(personId);
+        if (person == null)
+            throw new ContactNotFoundException($"Osoba o ID {personId} nie istnieje.");
+
+        var note = person.Notes?.FirstOrDefault(n => n.Id == noteId);
+        if (note == null)
+            throw new ContactNotFoundException($"Notatka o ID {noteId} nie istnieje dla osoby {personId}.");
+
+        person.Notes?.Remove(note);
+        await _unitOfWork.Persons.UpdateAsync(person);
+        await _unitOfWork.SaveChangesAsync();
     }
 }

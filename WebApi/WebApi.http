@@ -17,10 +17,10 @@ POST {{WebApi_HostAddress}}/api/contacts
 Content-Type: application/json
 
 {
-  "firstName": "Adam",
+  "firstName": "Dawid",
   "lastName": "Nowak",
   "email": "adam@wsei.edu.pl",
-  "phone": "48 123 456 789",
+  "phone": "48123456789",
   "position": null,
   "birthDate": null,
   "gender": 0,
@@ -30,5 +30,58 @@ Content-Type: application/json
 
 ###
 
+### 4. EDYCJA OSOBY
+PUT {{WebApi_HostAddress}}/api/contacts/732b7f3a-ccea-43b0-8e47-eec4a0f0041a
+Content-Type: application/json
 
+{
+  "firstName": "Jan",
+  "lastName": "Kowalski",
+  "email": "jan@wsei.edu.pl",
+  "phone": "48987654321",
+  "position": "Manager",
+  "birthDate": null,
+  "gender": 0,
+  "employerId": null,
+  "address": null
+}
 
+###
+
+### 5. DODANIE NOTATKI DO OSOBY
+POST {{WebApi_HostAddress}}/api/contacts/732b7f3a-ccea-43b0-8e47-eec4a0f0041a/notes
+Content-Type: application/json
+
+{
+  "content": "Wojtek to super persona"
+}
+
+###
+
+### 6. POBRANIE NOTATEK OSOBY
+GET {{WebApi_HostAddress}}/api/contacts/732b7f3a-ccea-43b0-8e47-eec4a0f0041a/notes
+Content-Type: application/json
+
+###
+
+### 6.1 POBRANIE POJEDYNCZEJ NOTATKI (zastąp {noteId} prawdziwym ID z odpowiedzi POST)
+GET {{WebApi_HostAddress}}/api/contacts/732b7f3a-ccea-43b0-8e47-eec4a0f0041a/notes/00000000-0000-0000-0000-000000000001
+Content-Type: application/json
+
+###
+
+### 7. DODANIE NOTATKI DO NIEISTNIEJĄCEJ OSOBY 
+POST {{WebApi_HostAddress}}/api/contacts/00000000-0000-0000-0000-000000000000/notes
+Content-Type: application/json
+
+{
+  "content": "Notatka"
+}
+
+###
+
+### 8. USUNIĘCIE NOTATKI (zastąp {noteId} prawdziwym ID z odpowiedzi POST)
+DELETE {{WebApi_HostAddress}}/api/contacts/732b7f3a-ccea-43b0-8e47-eec4a0f0041a/notes/00000000-0000-0000-0000-000000000001
+Content-Type: application/json
+
+###

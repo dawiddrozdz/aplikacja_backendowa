@@ -22,4 +22,10 @@ public interface IPersonService
     Task AddNoteAsync(Guid personId, string noteText);
 
     Task AddTagAsync(Guid personId, string tag);
+
+    Task<AppCore.Models.Note> AddNoteToPerson(Guid personId, CreateNoteDto noteDto);
+
+    Task<PersonDto> GetPerson(Guid personId);
+
+    Task RemoveNoteFromPerson(Guid personId, Guid noteId);
 }

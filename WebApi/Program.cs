@@ -18,6 +18,9 @@ public class Program
         builder.Services.AddControllers()
             .AddFluentValidation();
         
+        builder.Services.AddExceptionHandler<ProblemDetailsExceptionHandler>();
+        builder.Services.AddProblemDetails();
+
         builder.Services.AddSingleton<ICustomerService, MemoryCustomerService>();
         builder.Services.AddSingleton<IPersonRepository, MemoryPersonRepository>();
         builder.Services.AddSingleton<ICompanyRepository, MemoryCompanyRepository>();
@@ -38,6 +41,7 @@ public class Program
 
         app.UseHttpsRedirection();
         app.UseAuthorization();
+        app.UseExceptionHandler();
         app.MapControllers();
 
         app.MapGet("/api/organizations", (IOrganizationRepository repository) =>
@@ -49,4 +53,3 @@ public class Program
         app.Run();
     }
 }
-

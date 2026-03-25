@@ -25,7 +25,8 @@ public record PersonDto : ContactBaseDto
         Address = p.Address is not null ? new AddressDto(p.Address.Street, p.Address.City, p.Address.PostalCode, p.Address.Country, p.Address.AddressType) : null!,
         Status = p.ContactStatus,
         CreatedAt = p.DateTimeCreatedAt,
-        Tags = p.Tags?.Select(t => t.Name).ToList() ?? new List<string>()
+        Tags = p.Tags?.Select(t => t.Name).ToList() ?? new List<string>(),
+        Notes = p.Notes?.Select(n => NoteDto.FromEntity(n)).ToList() ?? new List<NoteDto>()
     };
 }
 
