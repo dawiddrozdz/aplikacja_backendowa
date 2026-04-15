@@ -17,15 +17,21 @@ POST {{WebApi_HostAddress}}/api/contacts
 Content-Type: application/json
 
 {
-  "firstName": "Dawid",
-  "lastName": "Nowak",
+  "firstName": "Witek",
+  "lastName": "Puszek",
   "email": "adam@wsei.edu.pl",
   "phone": "48123456789",
   "position": null,
   "birthDate": null,
   "gender": 0,
   "employerId": null,
-  "address": null
+  "address": {
+    "street": "ul.Szybka 15",
+    "city": "Kraków",
+    "postalCode": "00-001",
+    "country": "Polska",
+    "type": 0
+  }
 }
 
 ###
