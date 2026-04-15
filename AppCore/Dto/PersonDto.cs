@@ -19,7 +19,7 @@ public record PersonDto : ContactBaseDto
         Position = p.Position,
         BirthDate = p.BirthDate == default ? null : p.BirthDate,
         Gender = p.Gender,
-        EmployerId = Guid.TryParse(p.Employer, out var gid) ? gid : (Guid?)null,
+        EmployerId = p.Employer?.Id,
         Email = p.Email,
         Phone = p.Phone,
         Address = p.Address is not null ? new AddressDto(p.Address.Street, p.Address.City, p.Address.PostalCode, p.Address.Country, p.Address.AddressType) : null!,
@@ -29,4 +29,3 @@ public record PersonDto : ContactBaseDto
         Notes = p.Notes?.Select(n => NoteDto.FromEntity(n)).ToList() ?? new List<NoteDto>()
     };
 }
-

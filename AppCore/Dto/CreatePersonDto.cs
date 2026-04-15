@@ -26,8 +26,6 @@ public record CreatePersonDto(
             BirthDate = BirthDate ?? default,
             Gender = Gender,
             Position = Position,
-            // store employer id as string to match existing model
-            Employer = EmployerId?.ToString(),
             Email = Email,
             Phone = Phone,
             Address = Address is not null ? new AppCore.Models.Address
@@ -46,4 +44,3 @@ public record CreatePersonDto(
         return person;
     }
 };
-

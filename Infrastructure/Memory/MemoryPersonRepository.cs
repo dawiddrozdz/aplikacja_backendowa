@@ -59,7 +59,7 @@ public class MemoryPersonRepository : MemoryGenericRepository<Person>, IPersonRe
 
     public async Task<IEnumerable<Person>> GetByCompanyAsync(Guid companyId)
     {
-        return _data.Values.Where(p => p.Employer != null && Guid.TryParse(p.Employer, out var gid) && gid == companyId);
+        return _data.Values.Where(p => p.Employer != null && p.Employer.Id == companyId);
     }
 
     public Task<IEnumerable<Person>> GetByOrganizationAsync(Guid organizationId)

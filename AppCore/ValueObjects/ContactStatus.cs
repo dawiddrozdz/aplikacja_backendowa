@@ -5,6 +5,7 @@ public enum ContactStatus
     Active,
     Inactive,
     Prospect,
-    Lead
+    Lead,
+    Blocked
 }
 

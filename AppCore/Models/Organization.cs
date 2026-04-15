@@ -2,7 +2,7 @@
 
 namespace AppCore.Models;
 
-public class Organization : EntityBase
+public class Organization : Contact
 {
     public required string Name { get; set; }
     
@@ -12,12 +12,12 @@ public class Organization : EntityBase
     
     public string? Website { get; set; }
     
-    public Address? Address { get; set; }
-    
-    public List<Person> CategoryMembers { get; set; } = [];
+    public List<Person> Members { get; set; } = [];
     
     public Person? PrimaryContact { get; set; }
-    public DateTime DateTimeCreatedAt { get; set; }
-    public ContactStatus ContactStatus { get; set; }
-}
 
+    public override string GetDisplayName()
+    {
+        return Name;
+    }
+}

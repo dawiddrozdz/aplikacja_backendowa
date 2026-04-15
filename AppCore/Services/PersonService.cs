@@ -1,15 +1,15 @@
-using AppCore.Dto;
+﻿using AppCore.Dto;
 using AppCore.Interfaces;
 using AppCore.Models;
 using AppCore.Exceptions;
 
-namespace Infrastructure.Memory;
+namespace AppCore.Services;
 
-public class MemoryPersonService : IPersonService
+public class PersonService : IPersonService
 {
     private readonly IContactUnitOfWork _unitOfWork;
 
-    public MemoryPersonService(IContactUnitOfWork unitOfWork)
+    public PersonService(IContactUnitOfWork unitOfWork)
     {
         _unitOfWork = unitOfWork;
     }

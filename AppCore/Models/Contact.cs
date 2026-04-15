@@ -8,7 +8,7 @@ public abstract class Contact : EntityBase
     
     public required string Phone { get; set; }
     
-    public required Address Address { get; set; }
+    public required Address? Address { get; set; }
     
     public required DateTime DateTimeCreatedAt { get; set; }
     

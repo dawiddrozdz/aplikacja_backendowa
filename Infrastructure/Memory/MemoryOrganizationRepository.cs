@@ -13,6 +13,8 @@ public class MemoryOrganizationRepository : MemoryGenericRepository<Organization
         {
             Id = id1,
             Name = "Tech Innovations Inc.",
+            Email = "contact@techinnovations.pl",
+            Phone = "123-456-789",
             OrganizationType = OrganizationType.PublicInstitution,
             ARS = "123-456-789",
             Website = "https://techinnovations.pl",
